@@ -13,7 +13,7 @@ limitations under the License.
 
 package object
 
-// Metadata holds custom artifact attributes
+// Metadata holds custom attributes for objects.
 type Metadata map[string]interface{}
 
 func (m *Metadata) init() {
