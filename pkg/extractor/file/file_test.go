@@ -46,20 +46,11 @@ func TestFile(t *testing.T) {
 	assert.Equal(t, filepath.Base(file.Name()), o.Metadata["name"])
 	assert.Equal(t, "sha256:181210f8f9c779c26da1d9b2075bde0127302ee0e3fca38c9a83f5b1dd8e5d3b", o.Digest.String())
 
-	u, _ = uri.Parse(file.Name())
+	u, _ = uri.Parse("file://file_test.go")
 	o, err = Extract(*u)
 	assert.NoError(t, err)
 	assert.NotNil(t, o)
-	u.Scheme = "file"
-	assert.Equal(t, *u, o.URI)
-	assert.Equal(t, filepath.Base(file.Name()), o.Metadata["name"])
-	assert.Equal(t, "sha256:181210f8f9c779c26da1d9b2075bde0127302ee0e3fca38c9a83f5b1dd8e5d3b", o.Digest.String())
-
-	u, _ = uri.Parse("file_test.go")
-	o, err = Extract(*u)
-	assert.NoError(t, err)
-	assert.NotNil(t, o)
-	assert.Equal(t, uri.URI{Scheme: "file", Opaque: "file_test.go"}, o.URI)
+	assert.Equal(t, uri.URI{Scheme: "file", Opaque: "//file_test.go"}, o.URI)
 	assert.Equal(t, o.ContentType, "text/plain; charset=utf-8")
 	assert.Equal(t, o.Metadata, object.Metadata{
 		"name": "file_test.go",

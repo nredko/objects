@@ -34,7 +34,7 @@ var _ extractor.Extractor = Extract
 // Extract returns a file *object.Object from a given u
 func Extract(u uri.URI, options ...extractor.Option) (*object.Object, error) {
 
-	if u.Scheme != "" && u.Scheme != Scheme {
+	if u.Scheme != Scheme {
 		return nil, nil
 	}
 
@@ -79,7 +79,6 @@ func Extract(u uri.URI, options ...extractor.Option) (*object.Object, error) {
 		m.SetValues(data)
 	}
 
-	u.Scheme = Scheme
 	return &object.Object{
 		Descriptor: object.Descriptor{
 			Digest:      digest.NewDigest(digest.SHA256, h),
