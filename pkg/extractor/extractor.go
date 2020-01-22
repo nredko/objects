@@ -58,5 +58,8 @@ func Extract(rawURI string, options ...Option) (*object.Object, error) {
 	if e, ok := extractors[u.Scheme]; ok {
 		return e(*u, options...)
 	}
+	if u.Scheme == "" {
+		return nil, fmt.Errorf("scheme not provided and no fallback available")
+	}
 	return nil, fmt.Errorf("'%s' scheme not yet supported", u.Scheme)
 }
