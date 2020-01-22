@@ -27,8 +27,10 @@ import (
 // Scheme for git
 const Scheme = "git"
 
+var _ extractor.Extractor = Extract
+
 // Extract returns a git *object.Object from a given u
-func Extract(u *uri.URI, options ...extractor.Option) (*object.Object, error) {
+func Extract(u uri.URI, options ...extractor.Option) (*object.Object, error) {
 
 	if u.Scheme != Scheme {
 		return nil, nil
@@ -91,6 +93,6 @@ func Extract(u *uri.URI, options ...extractor.Option) (*object.Object, error) {
 			Size:   size,
 		},
 		Metadata: m,
-		URI:      *u,
+		URI:      u,
 	}, nil
 }

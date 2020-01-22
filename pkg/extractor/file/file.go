@@ -29,6 +29,8 @@ import (
 // Scheme for file
 const Scheme = "file"
 
+var _ extractor.Extractor = Extract
+
 // Extract returns a file *object.Object from a given u
 func Extract(u uri.URI, options ...extractor.Option) (*object.Object, error) {
 
