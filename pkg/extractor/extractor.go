@@ -21,6 +21,7 @@ import (
 )
 
 var extractors = map[string]Extractor{}
+var fallbackScheme = ""
 
 // Extractor extract an object.Object referenced by the given uri.URI.
 type Extractor func(uri.URI, ...Option) (*object.Object, error)
@@ -28,6 +29,10 @@ type Extractor func(uri.URI, ...Option) (*object.Object, error)
 // Register the Extractor e for the given scheme
 func Register(scheme string, e Extractor) {
 	extractors[scheme] = e
+}
+
+func SetFallbackScheme(scheme string) {
+	fallbackScheme = scheme
 }
 
 // Schemes returns the list of registered schemes.
@@ -47,9 +52,11 @@ func Extract(rawURI string, options ...Option) (*object.Object, error) {
 	if err != nil {
 		return nil, err
 	}
-
+	if u.Scheme == "" && fallbackScheme != "" {
+		u.Scheme = fallbackScheme
+	}
 	if e, ok := extractors[u.Scheme]; ok {
 		return e(*u, options...)
 	}
-	return nil, fmt.Errorf("%s scheme not yet supported", u.Scheme)
+	return nil, fmt.Errorf("'%s' scheme not yet supported", u.Scheme)
 }
