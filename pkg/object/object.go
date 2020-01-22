@@ -37,7 +37,7 @@ type Descriptor struct {
 
 // Object represents the set of all relevant information gathered from a digital object referenced by URI.
 type Object struct {
-	Descriptor
-	Metadata `json:"metadata"`
-	uri.URI  `json:"uri"`
+	Descriptor `json:"descriptor"`
+	Metadata   `json:"metadata"`
+	URI        uri.URI `json:"uri"`
 }
