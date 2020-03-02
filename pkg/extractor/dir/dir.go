@@ -83,8 +83,8 @@ func Extract(u uri.URI, options ...extractor.Option) (*object.Object, error) {
 		return nil, err
 	}
 
-	manifest1 := NewManifest(files...)
-	digest, err := manifest1.Digest()
+	manifest := NewManifest(files...)
+	digest, err := manifest.Digest()
 	if err != nil {
 		return nil, err
 	}

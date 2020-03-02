@@ -22,7 +22,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestArtifact(t *testing.T) {
+func TestDir(t *testing.T) {
 
 	tmpDir, err := ioutil.TempDir("", "/TempDir")
 	if err != nil {
