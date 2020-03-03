@@ -19,6 +19,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/codenotary/bundle"
 	"github.com/codenotary/objects/pkg/extractor"
 	"github.com/codenotary/objects/pkg/object"
 	"github.com/codenotary/objects/pkg/uri"
@@ -83,7 +84,7 @@ func Extract(u uri.URI, options ...extractor.Option) (*object.Object, error) {
 		return nil, err
 	}
 
-	manifest := NewManifest(files...)
+	manifest := bundle.NewManifest(files...)
 	digest, err := manifest.Digest()
 	if err != nil {
 		return nil, err

@@ -17,10 +17,12 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/codenotary/bundle"
 )
 
-func walk(root string) (files []Descriptor, err error) {
-	files = make([]Descriptor, 0)
+func walk(root string) (files []bundle.Descriptor, err error) {
+	files = make([]bundle.Descriptor, 0)
 	ignore, err := newIgnoreFileMatcher(root)
 	if err != nil {
 		return
@@ -38,8 +40,8 @@ func walk(root string) (files []Descriptor, err error) {
 		// descriptor's path must be OS agnostic
 		relPath = filepath.ToSlash(relPath)
 
-		// skip manifest and files matching the ignore patterns
-		if relPath == ManifestFilename || ignore.Match(strings.Split(relPath, "/"), false) {
+		// skip files matching the ignore patterns
+		if ignore.Match(strings.Split(relPath, "/"), false) {
 			return nil
 		}
 
@@ -47,7 +49,7 @@ func walk(root string) (files []Descriptor, err error) {
 		if err != nil {
 			return err
 		}
-		d, err := NewDescriptor(relPath, file)
+		d, err := bundle.NewDescriptor(relPath, file)
 		file.Close()
 		if err != nil {
 			return err
